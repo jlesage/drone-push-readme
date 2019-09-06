@@ -21,6 +21,7 @@ elif [[ ! -r "$PLUGIN_README" ]]; then
 fi
 
 # Login to Docker Hub.
+printf "Logging in to Docker Hub...\n"
 declare -r token=$(curl -s -X POST \
     -H "Content-Type: application/json" \
     -d '{"username": "'"$PLUGIN_USERNAME"'", "password": "'"$PLUGIN_PASSWORD"'"}' \
@@ -33,6 +34,7 @@ if [[ "${token}" = "null" ]]; then
 fi
 
 # Push the README.
+printf "Pushing $PLUGIN_README to $PLUGIN_REPO ...\n"
 declare -r code=$(jq -n --arg msg "$(<$PLUGIN_README)" \
     '{"registry":"registry-1.docker.io","full_description": $msg }' | \
         curl -s -o /dev/null  -L -w "%{http_code}" \
