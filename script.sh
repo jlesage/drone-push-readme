@@ -38,7 +38,7 @@ printf "Pushing $PLUGIN_README to $PLUGIN_REPO ...\n"
 declare -r code=$(jq -n --arg msg "$(<$PLUGIN_README)" \
     '{"registry":"registry-1.docker.io","full_description": $msg }' | \
         curl -s -o /dev/null  -L -w "%{http_code}" \
-            https://cloud.docker.com/v2/repositories/"$PLUGIN_REPO"/ \
+            https://hub.docker.com/v2/repositories/"$PLUGIN_REPO"/ \
             -d @- -X PATCH \
             -H "Content-Type: application/json" \
             -H "Authorization: JWT ${token}")
